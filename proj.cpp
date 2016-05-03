@@ -41,7 +41,7 @@ bool trie_search (string s) {
 	return current-> isleaf;
 }
 
-string dict [] = { "i", "me", "you", "us", "we", "he", "she", "him", "her", "it", "they", "them" };
+string dict [] = { "i", "me", "you", "us", "we", "he", "she", "him", "her", "it", "they", "them", "to", "and", "in", "the", "a" };
 
 void create_database(){
 	int len = sizeof(dict) / sizeof(dict[0]);
@@ -50,10 +50,38 @@ void create_database(){
 	}
 }
 
+bool special (char x) {
+	switch(x){
+		case ' ' : return 1;
+		case '.' : return 1;
+		case ',' : return 1;
+		case '!' : return 1;
+		case '\0' : return 1;
+		case '\n' : return 1;
+		case '\t' : return 1;
+		default : return 0;
+	}
+}
+
+void remove_tokens (string& input) {
+	for(int i = 0; i < input.length(); i++) {
+		if( !special(input[i]) ) {
+			int j=i;
+			while( !special(input[j]) ) j++;
+			if( trie_search( input.substr(i,j-i) ) ) input.erase(i, j-i);
+			else i=j-1;
+		}
+	}
+}
+
 int main() {
 	//fast_and_furious();
-	freopen("input.txt", "r", stdin);
+	freopen ("input.txt", "r", stdin);
 	create_database();
-	cout<<trie_search("she")<<" "<<trie_search("a")<<" "<<trie_search("i")<<" "<<trie_search("mukul");
+	string input;
+	getline (cin,input,'\0');
+	cout<<"Before : "<<input<<"\n";
+	remove_tokens (input);
+	cout<<"After : "<<input<<"\n";
 	return 0;
 }
