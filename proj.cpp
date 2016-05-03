@@ -20,7 +20,7 @@ class node {
 void trie_insert (string s) {
 	node *current = root;
 	for (int i = 0; i < s.length(); i++) {
-		int letter = s[i] - 'a';
+		int letter = tolower(s[i]) - 'a';
 		if( current-> child[letter] == NULL ) {
 			current-> child[letter] = new node;
 		}
@@ -32,7 +32,7 @@ void trie_insert (string s) {
 bool trie_search (string s) {
 	node *current = root;
 	for (int i = 0; i < s.length(); i++){
-		int letter = s[i] - 'a';
+		int letter = tolower(s[i]) - 'a';
 		if( current-> child[letter] == NULL ) {
 			return false;
 		}
@@ -41,7 +41,7 @@ bool trie_search (string s) {
 	return current-> isleaf;
 }
 
-string dict [] = { "i", "me", "you", "us", "we", "he", "she", "him", "her", "it", "they", "them", "to", "and", "in", "the", "a" };
+string dict [] = { "i", "me", "my", "you", "us", "we", "he", "she", "him", "her", "it", "they", "them", "to", "and", "in", "the", "a" };
 
 void create_database(){
 	int len = sizeof(dict) / sizeof(dict[0]);
