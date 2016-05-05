@@ -1,4 +1,4 @@
-//Author: Mukul Chandel
+//Author: Mukul Chandel and Shubham Rana
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -77,7 +77,7 @@ void remove_tokens (string& input) {
 	for(int i = 0; i < input.length(); i++) {
 		if( !special(input[i]) ) {
 			res = trie_search (input, i);
-			if ( res.first ) while (i < res.second)	input[i++] = '-';
+			if ( res.first ) while (i < res.second)	input[i++] = '$';
 			i = res.second;
 			while (!special(input[i]) )	i++;
 		}
@@ -88,10 +88,13 @@ int main() {
 	//fast_and_furious();
 	freopen ("input.txt", "r", stdin);
 	create_database();
-	string input;
+	string input, output;
 	getline (cin,input,'\0');
 	cout<<"Before : "<<input<<"\n";
 	remove_tokens (input);
-	cout<<"After  : "<<input<<"\n";
+	for(int i = 0; i < input.length(); i++){
+		if ( input[i] != '$' )	output += input[i];
+	}
+	cout<<"After  : "<<output<<"\n";
 	return 0;
 }
