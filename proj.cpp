@@ -18,16 +18,7 @@ class node {
 } *root = new node;
 
 bool special (char x) {
-	switch(x){
-		case ' ' : return 1;
-		case '.' : return 1;
-		case ',' : return 1;
-		case '!' : return 1;
-		case '\0' : return 1;
-		case '\n' : return 1;
-		case '\t' : return 1;
-		default : return 0;
-	}
+	return !isalnum(x);
 }
 
 void trie_insert (string s) {
@@ -45,15 +36,18 @@ void trie_insert (string s) {
 
 pair< bool, int > trie_search (string s, int start) {
 	node *current = root;
+	pair< bool, int > res = make_pair(0, start);
 	int i = start, letter = tolower(s[start]) - 'a';
 	letter = (letter == -65) ? 26 : letter;
 	while (current-> child[letter] != NULL){
 		current = current-> child[letter];
 		i++;
+		if( ( current-> isleaf && special (s[i]) ) ) res = make_pair(1,i);
 		letter = tolower(s[i]) - 'a';
 		letter = (letter == -65) ? 26 : letter;
+		if( letter <= 0 || letter >= 26) break;
 	}
-	return make_pair( ( current-> isleaf && special (s[i]) ), i );
+	return res;
 }
 
 string dict [] = {
