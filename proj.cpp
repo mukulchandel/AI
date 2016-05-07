@@ -45,7 +45,7 @@ pair< bool, int > trie_search (string s, int start) {
 		if( ( current-> isleaf && special (s[i]) ) ) res = make_pair(1,i);
 		letter = tolower(s[i]) - 'a';
 		letter = (letter == -65) ? 26 : letter;
-		if( letter <= 0 || letter >= 26) break;
+		if( letter < 0 || letter > 26) break;
 	}
 	return res;
 }
